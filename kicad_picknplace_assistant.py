@@ -98,18 +98,18 @@ def create_board_figure(pcb, bom_row, layer=pcbnew.F_Cu):
 
             if shape == pcbnew.PAD_SHAPE_RECT:
                 rct = Rectangle(pos + dpos, size[0], size[1], angle=angle)
-            elif shape == pcbnew.PAD_SHAPE_ROUNDRECT:
-                # subtract 2x corner radius from pad size, as FancyBboxPatch draws a rounded rectangle around the specified rectangle
-                pad=p.GetRoundRectCornerRadius()*1e-6
-                # the bottom-left corner of the FancyBboxPatch is the inside rectangle so need to compensate with the corner radius
-                corneroffset = np.asarray([pad,pad])
-                #draw rounded patch
-                rct = FancyBboxPatch(pos + dpos+corneroffset, size[0]-2*pad, size[1]-2*pad,
-                    boxstyle=matplotlib.patches.BoxStyle("Round", pad=pad))
-                #and rotate it
-                xy=pos + dpos
-                tfm = matplotlib.transforms.Affine2D().rotate_deg_around(xy[0],xy[1],angle) + ax.transData
-                rct.set_transform(tfm)
+            #elif shape == pcbnew.PAD_SHAPE_ROUNDRECT:
+            #    # subtract 2x corner radius from pad size, as FancyBboxPatch draws a rounded rectangle around the specified rectangle
+            #    pad=p.GetRoundRectCornerRadius()*1e-6
+            #    # the bottom-left corner of the FancyBboxPatch is the inside rectangle so need to compensate with the corner radius
+            #    corneroffset = np.asarray([pad,pad])
+            #    #draw rounded patch
+            #    rct = FancyBboxPatch(pos + dpos+corneroffset, size[0]-2*pad, size[1]-2*pad,
+            #        boxstyle=matplotlib.patches.BoxStyle("Round", pad=pad))
+            #    #and rotate it
+            #    xy=pos + dpos
+            #    tfm = matplotlib.transforms.Affine2D().rotate_deg_around(xy[0],xy[1],angle) + ax.transData
+            #    rct.set_transform(tfm)
             elif shape == pcbnew.PAD_SHAPE_OVAL:
                 rct = Ellipse(pos, size[0], size[1], angle=angle)
             elif shape == pcbnew.PAD_SHAPE_CIRCLE:

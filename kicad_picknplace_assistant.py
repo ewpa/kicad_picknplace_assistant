@@ -184,8 +184,9 @@ def generate_bom(pcb, filter_layer=None):
     # build bom table, sort refs
     bom_table = []
     for (value, footpr), refs in part_groups.items():
-        line = (len(refs), value, footpr, natural_sort(refs))
-        bom_table.append(line)
+        if len(refs[0]) != 0:
+            line = (len(refs), value, footpr, natural_sort(refs))
+            bom_table.append(line)
 
     # sort table by reference prefix and quantity
     def sort_func(row):
